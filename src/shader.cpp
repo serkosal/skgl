@@ -7,8 +7,8 @@ std::filesystem::path Shader::standart_dir = "resources/shaders/";
 
 void Shader::init(const std::filesystem::path& path, bool use_standart_dir)
 {
-    if (_id)
-        Shader::deleter(_id.get());
+    if (m_id)
+        Shader::deleter(m_id.get());
 
     std::string vertexCode;
     std::string fragmentCode;
@@ -54,10 +54,10 @@ void Shader::init(const std::filesystem::path& path, bool use_standart_dir)
     auto id = glCreateProgram();
     set_id(id);
 
-    glAttachShader(*_id, vertex);
-    glAttachShader(*_id, fragment);
-    glLinkProgram(*_id);
-    check_errors(*_id, "PROGRAM");
+    glAttachShader(*m_id, vertex);
+    glAttachShader(*m_id, fragment);
+    glLinkProgram(*m_id);
+    check_errors(*m_id, "PROGRAM");
     // delete the shaders as they're linked into our program now and no longer necessery
     glDeleteShader(vertex);
     glDeleteShader(fragment);

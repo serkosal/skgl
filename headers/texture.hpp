@@ -14,7 +14,12 @@ namespace skgl
 class Texture : public GL_Object
 {
 public:
+
+    // Static data
     static std::filesystem::path standart_dir;
+
+
+    // Methods
 
     Texture()
     {
@@ -40,7 +45,7 @@ public:
         init(path, flip, use_standart_dir);
     }
 
-    void bind() const { glBindTexture(GL_TEXTURE_2D, *_id); }
+    void bind() const { glBindTexture(GL_TEXTURE_2D, *m_id); }
     void unbind() const { glBindTexture(GL_TEXTURE_2D, 0); }
 };
 

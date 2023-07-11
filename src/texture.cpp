@@ -10,13 +10,13 @@ std::filesystem::path Texture::standart_dir = "resources/textures/";
 
 void Texture::init(const std::filesystem::path& path, bool flip, bool use_standart_dir)
 {
-    if (_id)
-        Texture::deleter(_id.get());
+    if (m_id)
+        Texture::deleter(m_id.get());
 
     set_id(0);
 
-    glGenTextures(1, _id.get());
-    glBindTexture(GL_TEXTURE_2D, *_id);
+    glGenTextures(1, m_id.get());
+    glBindTexture(GL_TEXTURE_2D, *m_id);
 
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);

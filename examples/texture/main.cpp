@@ -12,8 +12,15 @@ int main()
 		)
 	);
 
-	square.vao.link(0, 3, GL_FLOAT, false, sizeof(skgl::Vertex), offsetof(skgl::Vertex, skgl::Vertex::_pos));
-	square.vao.link(1, 2, GL_FLOAT, false, sizeof(skgl::Vertex), offsetof(skgl::Vertex, skgl::Vertex::_tex));
+	square.m_vao.link(0, 3, GL_FLOAT, false, 
+		sizeof(skgl::Vertex), 
+		offsetof(skgl::Vertex, skgl::Vertex::m_pos)
+	);
+
+	square.m_vao.link(1, 2, GL_FLOAT, false, 
+		sizeof(skgl::Vertex), 
+		offsetof(skgl::Vertex, skgl::Vertex::m_tex)
+	);
 
 	skgl::Texture texture("wall.jpg");
 

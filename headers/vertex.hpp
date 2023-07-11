@@ -9,13 +9,17 @@ namespace skgl
 
 struct Vertex
 {
-	Vertex() {}
 
-	Vertex(const glm::vec3& pos, const glm::vec2& tex)
-		: _pos(pos), _tex(tex) {}
+	// Data
+	glm::vec3 m_pos;
+	glm::vec2 m_tex;
 
-	glm::vec3 _pos = glm::vec3(0.f); //float * 3 12
-	glm::vec2 _tex = glm::vec2(0.f); //float * 2 8
+	// Methods
+
+	Vertex(
+		const glm::vec3& pos = glm::vec3(0.f),
+		const glm::vec2& tex = glm::vec2(0.f))
+	: m_pos(pos), m_tex(tex) {}
 };
 
 } // namespace skgl

@@ -13,9 +13,13 @@ namespace skgl
 class VAO : public GL_Object
 {
 public:
-	VBO vbo;
-	EBO ebo;
 
+	// Data
+	VBO m_vbo;
+	EBO m_ebo;
+
+
+	// Methods
 	VAO()
 	{
 		deleter = [](GLuint* ptr)
@@ -27,44 +31,44 @@ public:
 
 	void init(VBO vbo)
 	{
-		this->vbo = vbo;
+		m_vbo = vbo;
 
-		if (_id)
-			deleter(_id.get());
+		if (m_id)
+			deleter(m_id.get());
 		set_id(0);
 
-		glGenVertexArrays(1, _id.get());
+		glGenVertexArrays(1, m_id.get());
 	}
 	void init(VBO vbo, EBO ebo)
 	{
-		this->vbo = vbo;
-		this->ebo = ebo;
+		m_vbo = vbo;
+		m_ebo = ebo;
 
-		if (_id)
-			deleter(_id.get());
+		if (m_id)
+			deleter(m_id.get());
 		set_id(0);
 
-		glGenVertexArrays(1, _id.get());
+		glGenVertexArrays(1, m_id.get());
 	}
 
 	VAO(VBO vbo) : VAO() { init(vbo); }
 	VAO(VBO vbo, EBO ebo) : VAO() { init(vbo, ebo); }
 
-	void bind() { glBindVertexArray(*_id); }
+	void bind() { glBindVertexArray(*m_id); }
 	void unbind() { glBindVertexArray(0); }
 
 	void draw()
 	{
 		bind();
-		vbo.bind();
+		m_vbo.bind();
 
-		if (ebo._id)
+		if (m_ebo.m_id)
 		{
-			ebo.bind();
-			glDrawElements(GL_TRIANGLES, ebo.get_size(), GL_UNSIGNED_INT, 0);
+			m_ebo.bind();
+			glDrawElements(GL_TRIANGLES, m_ebo.get_ind_num(), GL_UNSIGNED_INT, 0);
 		}
 		else
-			glDrawArrays(GL_TRIANGLES, 0, vbo.get_size());
+			glDrawArrays(GL_TRIANGLES, 0, m_vbo.get_vert_num());
 	}
 
 	void link(
@@ -73,13 +77,13 @@ public:
 		GLenum type = GL_FLOAT,
 		bool normalized = false,
 		GLsizei stride = sizeof(Vertex),
-		GLsizei offset_bytes = offsetof(Vertex, Vertex::_pos)
+		GLsizei offset_bytes = offsetof(Vertex, Vertex::m_pos)
 	)
 	{
 		bind();
-		vbo.bind();
-		if (ebo._id)
-			ebo.bind();
+		m_vbo.bind();
+		if (m_ebo.m_id)
+			m_ebo.bind();
 
 		glVertexAttribPointer(index, size, type, normalized, stride, (void*)(offset_bytes));
 		glEnableVertexAttribArray(index);

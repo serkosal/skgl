@@ -12,9 +12,18 @@ namespace skgl
 class GL_Object
 {
 public:
+
+	// Constuctors
+
 	GL_Object() {}
 	~GL_Object() {};
 protected:
+
+	// Data
+	std::shared_ptr<GLuint> m_id;
+
+
+	// Methods
 	void (*deleter)(GLuint* ptr) = [](GLuint* ptr)
 	{
 		delete ptr;
@@ -22,10 +31,10 @@ protected:
 
 	void set_id(GLuint id)
 	{
-		_id = std::shared_ptr<GLuint>(new GLuint(id), deleter);
+		m_id = std::shared_ptr<GLuint>(new GLuint(id), deleter);
 	}
 
-	std::shared_ptr<GLuint> _id;
+
 };
 
 } //namespace skgl

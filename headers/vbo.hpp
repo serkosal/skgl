@@ -14,9 +14,15 @@ class VAO;
 
 class VBO : public GL_Object
 {
-	size_t _size = 0;
 	friend class VAO;
+
+
+	// Data
+	size_t m_verticies_n = 0;
+
 public:
+
+	// Methods
 	VBO()
 	{
 		deleter = [](GLuint* ptr)
@@ -28,25 +34,25 @@ public:
 
 	void init(const std::vector<Vertex>& vertices, GLenum usage = GL_STATIC_DRAW)
 	{
-		_size = vertices.size();
+		m_verticies_n = vertices.size();
 
-		if (_id)
-			deleter(_id.get());
+		if (m_id)
+			deleter(m_id.get());
 		set_id(0);
 
-		glGenBuffers(1, _id.get());
+		glGenBuffers(1, m_id.get());
 		bind();
 
-		glBufferData(GL_ARRAY_BUFFER, _size * sizeof(Vertex), vertices.data(), usage);
+		glBufferData(GL_ARRAY_BUFFER, m_verticies_n * sizeof(Vertex), vertices.data(), usage);
 	}
 
 	VBO(const std::vector<Vertex>& vertices, GLenum usage = GL_STATIC_DRAW)
 		: VBO()
 	{ init(vertices, usage); }
 
-	size_t get_size() { return _size; }
+	size_t get_vert_num() { return m_verticies_n; }
 
-	void bind() { glBindBuffer(GL_ARRAY_BUFFER, *_id); }
+	void bind() { glBindBuffer(GL_ARRAY_BUFFER, *m_id); }
 	void unbind() { glBindBuffer(GL_ARRAY_BUFFER, 0);  }
 };
 

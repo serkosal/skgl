@@ -12,17 +12,21 @@ namespace skgl
 
 struct Drawable
 {
-	Shader shader;
-	VAO vao;
-	glm::mat4 trans = glm::mat4(1.f);
+	// Data
+	Shader m_shader;
+	VAO m_vao;
+
+	glm::mat4 m_trans = glm::mat4(1.f);
+
+	// Methods
 
 	Drawable(Shader shader, VAO vao)
-		: shader(shader), vao(vao) {}
+		: m_shader(shader), m_vao(vao) {}
 
 	virtual void draw() 
 	{
-		shader.bind();
-		vao.draw();
+		m_shader.bind();
+		m_vao.draw();
 	}
 };
 

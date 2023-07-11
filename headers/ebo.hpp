@@ -16,8 +16,14 @@ class VAO;
 class EBO : public GL_Object
 {
 	friend class VAO;
-	size_t _size = 0;
+
+
+	// DATA
+	size_t m_indices_n = 0;
+
 public:
+
+	// Methods
 	EBO()
 	{
 		deleter = [](GLuint* ptr)
@@ -27,22 +33,22 @@ public:
 		};
 	}
 
-	void bind() { glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, *_id); }
+	void bind() { glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, *m_id); }
 	void unbind() { glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0); }
 
-	size_t get_size() { return _size; }
+	size_t get_ind_num() { return m_indices_n; }
 
 	void init(const std::vector<GLuint>& indices, GLenum usage = GL_STATIC_DRAW)
 	{
-		_size = indices.size();
+		m_indices_n = indices.size();
 
-		if (_id)
-			deleter(_id.get());
+		if (m_id)
+			deleter(m_id.get());
 		set_id(0);
-		glGenBuffers(1, _id.get());
+		glGenBuffers(1, m_id.get());
 
 		bind();
-		glBufferData(GL_ELEMENT_ARRAY_BUFFER, _size * sizeof(GLuint), indices.data(), usage);
+		glBufferData(GL_ELEMENT_ARRAY_BUFFER, m_indices_n * sizeof(GLuint), indices.data(), usage);
 	}
 
 	EBO(const std::vector<GLuint>& indices, GLenum usage = GL_STATIC_DRAW)
