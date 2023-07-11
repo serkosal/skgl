@@ -1,6 +1,13 @@
 # Prerequisites
 *.d
 
+# Visual Studio files
+.vs
+
+# Build subdirectories
+out/*
+build/*
+
 # Compiled Object files
 *.slo
 *.lo
@@ -30,3 +37,18 @@
 *.exe
 *.out
 *.app
+
+
+# Cmake ignored files
+CMakeSettings.json
+CMakeLists.txt.user
+CMakeCache.txt
+CMakeFiles
+CMakeScripts
+Testing
+Makefile
+cmake_install.cmake
+install_manifest.txt
+compile_commands.json
+CTestTestfile.cmake
+_deps
