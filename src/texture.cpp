@@ -23,13 +23,14 @@ void Texture::init(const std::filesystem::path& path, bool flip, bool use_standa
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 
-    stbi_set_flip_vertically_on_load(true);
+    stbi_set_flip_vertically_on_load(flip);
 
     int width, height, nrChannels;
-    auto result_path = use_standart_dir ? standart_dir / path : path;
 
+    auto path_full = use_standart_dir ? standart_dir / path : path;
+    auto fstr = std::filesystem::absolute(path_full).string();
 
-    unsigned char* data = stbi_load(result_path.string().data(), &width, &height, &nrChannels, 0);
+    unsigned char* data = stbi_load(fstr.c_str(), &width, &height, &nrChannels, 0);
     if (data)
     {
         GLenum format;
@@ -39,6 +40,10 @@ void Texture::init(const std::filesystem::path& path, bool flip, bool use_standa
             format = GL_RGB;
         else if (nrChannels == 4)
             format = GL_RGBA;
+        else
+            throw std::runtime_error(
+                "Unknown format=" + nrChannels + ("of texture located : " + fstr )
+            );
 
         glTexImage2D(GL_TEXTURE_2D, 0, format, width, height, 0, format, GL_UNSIGNED_BYTE, data);
         glGenerateMipmap(GL_TEXTURE_2D);
@@ -48,7 +53,7 @@ void Texture::init(const std::filesystem::path& path, bool flip, bool use_standa
     else
     {
         stbi_image_free(data);
-        throw std::runtime_error("Error to load texture located: " + result_path.string());
+        throw std::runtime_error("Error to load texture file which is located: " + fstr);
     }
 }
 

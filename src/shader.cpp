@@ -1,5 +1,7 @@
 #include "shader.hpp"
 
+#include <iostream>
+
 namespace skgl
 {
 
@@ -19,11 +21,19 @@ void Shader::init(const std::filesystem::path& path, bool use_standart_dir)
     vShaderFile.exceptions(std::ifstream::failbit | std::ifstream::badbit);
     fShaderFile.exceptions(std::ifstream::failbit | std::ifstream::badbit);
 
-    auto vertex_path = use_standart_dir ? standart_dir / path : path;
-    auto fragment_path = vertex_path;
+    auto path_no_ext = use_standart_dir ? standart_dir / path : path;
 
-    vShaderFile.open(vertex_path.concat(".vs").string());
-    fShaderFile.open(fragment_path.concat(".fs").string());
+    auto vertex_str = std::filesystem::absolute(path_no_ext).string() + ".vs";
+    auto fragment_str = std::filesystem::absolute(path_no_ext).string() + ".fs";
+
+    vShaderFile.open(vertex_str);
+    fShaderFile.open(fragment_str);
+
+    if (!fShaderFile.is_open())
+        throw std::runtime_error("Could not open shader file located: " + fragment_str);
+
+    if (!vShaderFile.is_open())
+        throw std::runtime_error("Could not open shader file located: " + vertex_str);
 
     std::stringstream vShaderStream, fShaderStream;
     // read file's buffer contents into streams
