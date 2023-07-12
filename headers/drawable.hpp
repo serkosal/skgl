@@ -20,6 +20,8 @@ struct Drawable
 
 	// Methods
 
+	Drawable() {}
+
 	Drawable(Shader shader, VAO vao)
 		: m_shader(shader), m_vao(vao) {}
 
