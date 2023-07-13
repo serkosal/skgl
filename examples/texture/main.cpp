@@ -2,7 +2,8 @@
 
 int main()
 {
-	auto window = skgl::Window::create(800, 600, "skgl v. alpha 0.0.0.1");
+	auto window = skgl::Window::create(1980, 1080, "skgl texture", true);
+	window->set_cursor_mode(skgl::Window::cursor_modes::disabled);
 
 	skgl::Drawable square;
 	skgl::Texture texture;
@@ -25,7 +26,7 @@ int main()
 	{
 		window->destroy();
 
-		std::cout << e.what() << "\n";
+		std::cout << e.what() << "\n\n";
 		std::cout << "Press any key to continue...\n";
 		
 		char ch;
@@ -48,19 +49,39 @@ int main()
 	cam.m_aspect_ratio = 800.f / 600.f;
 	cam.m_pos = { 0.f, 0.f, -2.f };
 
+	bool isCaptured = false;
+	bool is_to_capture = false;
 
 	while (!window->should_close())
 	{
 		float dt = window->elapsed_time();
 
+		{
+			auto offset = window->get_mouse_offset();
+			cam.rotate(dt * 30 * offset.x, {0, 1, 0});
+			cam.rotate(dt * 30 * offset.y, cam.get_right());
+		}
+			
+
 		if (window->is_pressed(skgl::Window::keys::q))
 			window->set_should_close();
 
 		if (window->is_pressed(skgl::Window::keys::s))
-			cam.move(dt * glm::vec3{ 0.f, 0.f, -1.f });
+			cam.move(dt * -cam.get_dir());
 
 		if (window->is_pressed(skgl::Window::keys::w))
-			cam.move(dt * glm::vec3{ 0.f, 0.f, 1.f });
+			cam.move(dt * cam.get_dir());
+
+		if (window->is_pressed(skgl::Window::keys::a))
+			cam.move(dt * -cam.get_right());
+
+		if (window->is_pressed(skgl::Window::keys::d))
+			cam.move(dt * cam.get_right());
+
+		if (window->is_pressed(skgl::Window::keys::space))
+			cam.move(dt * glm::vec3{0, 1, 0});
+		if (window->is_pressed(skgl::Window::keys::left_shift))
+			cam.move(dt * glm::vec3{0, -1, 0});
 
 		window->clear();
 

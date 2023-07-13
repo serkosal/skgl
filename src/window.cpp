@@ -17,7 +17,8 @@ Window::Window(int width, int height, std::string_view title, bool is_fullscreen
 	glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
 #endif
 
-	m_ptr = glfwCreateWindow(width, height, title.data(), NULL, NULL);
+	m_ptr = glfwCreateWindow(width, height, title.data(), 
+		is_fullscreen ? glfwGetPrimaryMonitor() : NULL, NULL);
 
 	if (m_ptr == nullptr)
 		throw std::runtime_error("Failed to create GLFW window!\n");
@@ -27,7 +28,7 @@ Window::Window(int width, int height, std::string_view title, bool is_fullscreen
 	if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress))
 		throw std::runtime_error("Failed to initialize GLAD");
 
-	glViewport(0, 0, 800, 600);
+	glViewport(0, 0, width, height);
 
 	glfwSetFramebufferSizeCallback(m_ptr,
 		[](GLFWwindow* window, int width, int height)
@@ -155,5 +156,5 @@ bool Window::is_pressed(Window::mouse button) const
 
  Window::~Window()
 {
-	set_should_close();
+	glfwTerminate();
 }

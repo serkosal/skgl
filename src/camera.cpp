@@ -8,11 +8,12 @@ namespace skgl {
 void Camera::rotate(float degree, const glm::vec3& axis)
 {
 	auto a = glm::radians(degree / 2);
+	auto l = glm::normalize(axis);
 	const glm::quat q(
 		cosf(a),
-		axis.x * sinf(a),
-		axis.y * sinf(a),
-		axis.z * sinf(a)
+		l.x * sinf(a),
+		l.y * sinf(a),
+		l.z * sinf(a)
 		);
 
 	m_dir = q * m_dir * glm::conjugate(q);
