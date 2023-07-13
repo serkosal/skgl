@@ -16,7 +16,9 @@
 #include "ebo.hpp"
 #include "vao.hpp"
 
+#include "camera.hpp"
 #include "drawable.hpp"
+
 
 const std::vector<skgl::Vertex> vertices =
 {

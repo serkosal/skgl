@@ -6,6 +6,7 @@
 
 #include "shader.hpp"
 #include "vao.hpp"
+#include "camera.hpp"
 
 namespace skgl 
 {
@@ -25,9 +26,14 @@ struct Drawable
 	Drawable(Shader shader, VAO vao)
 		: m_shader(shader), m_vao(vao) {}
 
-	virtual void draw() 
+	virtual void draw(const Camera& camera)
 	{
 		m_shader.bind();
+
+		m_shader.setMat4("model", m_trans);
+		m_shader.setMat4("view", camera.look_at());
+		m_shader.setMat4("proj", camera.get_proj());
+
 		m_vao.draw();
 	}
 };
