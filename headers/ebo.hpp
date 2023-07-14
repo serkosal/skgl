@@ -51,7 +51,7 @@ public:
 		glBufferData(GL_ELEMENT_ARRAY_BUFFER, m_indices_n * sizeof(GLuint), indices.data(), usage);
 	}
 
-	EBO(const std::vector<GLuint>& indices, GLenum usage = GL_STATIC_DRAW)
+	explicit EBO(const std::vector<GLuint>& indices, GLenum usage = GL_STATIC_DRAW)
 		: EBO() { init(indices, usage); }
 };
 

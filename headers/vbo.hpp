@@ -46,7 +46,7 @@ public:
 		glBufferData(GL_ARRAY_BUFFER, m_verticies_n * sizeof(Vertex), vertices.data(), usage);
 	}
 
-	VBO(const std::vector<Vertex>& vertices, GLenum usage = GL_STATIC_DRAW)
+	explicit VBO(const std::vector<Vertex>& vertices, GLenum usage = GL_STATIC_DRAW)
 		: VBO()
 	{ init(vertices, usage); }
 

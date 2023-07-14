@@ -51,7 +51,7 @@ public:
 		glGenVertexArrays(1, m_id.get());
 	}
 
-	VAO(VBO vbo) : VAO() { init(vbo); }
+	explicit VAO(VBO vbo) : VAO() { init(vbo); }
 	VAO(VBO vbo, EBO ebo) : VAO() { init(vbo, ebo); }
 
 	void bind() { glBindVertexArray(*m_id); }

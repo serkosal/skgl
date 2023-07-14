@@ -37,7 +37,7 @@ public:
     void init(const std::filesystem::path& path, bool use_standart_dir = true);
 
 
-    Shader(const std::filesystem::path& path, bool use_standart_dir = true)
+    explicit Shader(const std::filesystem::path& path, bool use_standart_dir = true)
         : Shader() 
     { 
         init(path, use_standart_dir); 

@@ -36,7 +36,7 @@ public:
         bool use_standart_dir = true
     );
 
-    Texture(
+    explicit Texture(
         const std::filesystem::path& path,
         bool flip = true,
         bool use_standart_dir = true
