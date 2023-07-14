@@ -11,8 +11,8 @@ int main()
 	try
 	{
 		// change of standart dirs because of the location of an executable after the building
-		skgl::Shader::standart_dir = "../../../resources/shaders/";
-		skgl::Texture::standart_dir = "../../../resources/textures/";
+		/*skgl::Shader::standart_dir = "../../../resources/shaders/";
+		skgl::Texture::standart_dir = "../../../resources/textures/";*/
 
 		texture.init("wall.jpg");
 
@@ -48,9 +48,6 @@ int main()
 	skgl::Camera cam;
 	cam.m_aspect_ratio = 800.f / 600.f;
 	cam.m_pos = { 0.f, 0.f, -2.f };
-
-	bool isCaptured = false;
-	bool is_to_capture = false;
 
 	while (!window->should_close())
 	{
