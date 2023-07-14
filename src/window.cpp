@@ -1,5 +1,6 @@
 #include <stdexcept>
 
+#include "log.hpp"
 #include "window.hpp"
 
 using namespace skgl;
@@ -8,10 +9,14 @@ std::unique_ptr<Window> Window::sm_instance;
 
 Window::Window(int width, int height, std::string_view title, bool is_fullscreen)
 {
+	skgl::log("Window constructor invoked");
+
 	glfwInit();
 	glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
 	glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
 	glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
+
+	skgl::log("GLFW Inited");
 
 #ifdef __APPLE__
 	glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
@@ -21,12 +26,24 @@ Window::Window(int width, int height, std::string_view title, bool is_fullscreen
 		is_fullscreen ? glfwGetPrimaryMonitor() : NULL, NULL);
 
 	if (m_ptr == nullptr)
+	{
+		skgl::log("GLFW Couldn't create window!");
 		throw std::runtime_error("Failed to create GLFW window!\n");
+	}
+	else
+		skgl::log("GLFW successfully created window.");
+		
 
 	glfwMakeContextCurrent(m_ptr);
 
 	if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress))
+	{
+		skgl::log("Failed to initialize GLAD!");
 		throw std::runtime_error("Failed to initialize GLAD");
+	}
+	else
+		skgl::log("Successfully initialized GLAD.");
+		
 
 	glViewport(0, 0, width, height);
 
@@ -43,6 +60,8 @@ Window::Window(int width, int height, std::string_view title, bool is_fullscreen
 
 Window* Window::create(int width, int height, std::string_view title, bool is_fullscreen)
 {
+	skgl::log("skgl::Window::create() function called.");
+
 	if (!sm_instance)
 	{
 		Window* window_temp = new Window(width, height, title, is_fullscreen);
@@ -60,6 +79,7 @@ Window* Window::instance()
 
 void Window::destroy()
 {
+	skgl::log("skgl::Window::destroy() function called.");
 	Window::instance()->~Window();
 }
 
@@ -156,5 +176,7 @@ bool Window::is_pressed(Window::mouse button) const
 
  Window::~Window()
 {
+	skgl::log("Window's destructor invoked.");
 	glfwTerminate();
+	skgl::log("GLFW terminated.");
 }

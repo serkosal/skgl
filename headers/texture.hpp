@@ -24,6 +24,7 @@ public:
 
     Texture()
     {
+        skgl::log("Texture's constructor invoked");
         deleter = [](GLuint* ptr)
         {
             glDeleteTextures(1, ptr);

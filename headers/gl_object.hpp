@@ -6,6 +6,9 @@
 
 #include <glad/glad.h>
 
+#define SK_LOGGING
+#include "log.hpp"
+
 namespace skgl
 {
 
@@ -15,8 +18,14 @@ public:
 
 	// Constuctors
 
-	GL_Object() {}
-	~GL_Object() {};
+	GL_Object() 
+	{
+		skgl::log("GL_Object constructor invoked");
+	}
+	~GL_Object() 
+	{
+		skgl::log("GL_Object destructor invoked");
+	};
 protected:
 
 	// Data

@@ -21,7 +21,15 @@ struct Drawable
 
 	// Methods
 
-	Drawable() {}
+	Drawable() 
+	{
+		skgl::log("Drawable's constructor invoked");
+	}
+
+	~Drawable()
+	{
+		skgl::log("Drawable's destructor invoked");
+	}
 
 	Drawable(Shader shader, VAO vao)
 		: m_shader(shader), m_vao(vao) {}

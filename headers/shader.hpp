@@ -26,11 +26,17 @@ public:
 
     Shader() 
     { 
+        skgl::log("Shader's constructor invoked");
         deleter = [](GLuint* ptr)
         {
             glDeleteProgram(*ptr);
             delete ptr;
         };
+    }
+
+    ~Shader()
+    {
+        skgl::log("Shader's destructor invoked");
     }
 
 

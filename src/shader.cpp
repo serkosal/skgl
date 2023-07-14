@@ -7,6 +7,7 @@ namespace skgl
 
 void Shader::init(const std::filesystem::path& path, bool use_standart_dir)
 {
+    skgl::log("Shader's init() called");
     if (m_id)
         Shader::deleter(m_id.get());
 
@@ -69,6 +70,8 @@ void Shader::init(const std::filesystem::path& path, bool use_standart_dir)
     // delete the shaders as they're linked into our program now and no longer necessery
     glDeleteShader(vertex);
     glDeleteShader(fragment);
+
+    skgl::log("Shader successfully inited");
 }
 
 

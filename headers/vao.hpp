@@ -24,15 +24,21 @@ public:
 	// Methods
 	VAO()
 	{
+		skgl::log("VAO's constructor invoked");
 		deleter = [](GLuint* ptr)
 		{
 			glDeleteVertexArrays(1, ptr);
 			delete ptr;
 		};
 	}
+	~VAO()
+	{
+		skgl::log("VAO's destructor invoked");
+	}
 
 	void init(VBO vbo)
 	{
+		skgl::log("VAO's init() called");
 		m_vbo = vbo;
 
 		if (m_id)
@@ -40,9 +46,11 @@ public:
 		set_id(0);
 
 		glGenVertexArrays(1, m_id.get());
+		skgl::log("VAO is successfully inited");
 	}
 	void init(VBO vbo, EBO ebo)
 	{
+		skgl::log("VAO's init() called");
 		m_vbo = vbo;
 		m_ebo = ebo;
 
@@ -51,6 +59,7 @@ public:
 		set_id(0);
 
 		glGenVertexArrays(1, m_id.get());
+		skgl::log("VAO is successfully inited");
 	}
 
 	explicit VAO(VBO vbo) : VAO() { init(vbo); }

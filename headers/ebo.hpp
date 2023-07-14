@@ -27,11 +27,18 @@ public:
 	// Methods
 	EBO()
 	{
+		skgl::log("EBO's constructor invoked");
+
 		deleter = [](GLuint* ptr)
 		{
 			glDeleteBuffers(1, ptr);
 			delete ptr;
 		};
+	}
+
+	~EBO()
+	{
+		skgl::log("EBO's destructor invoked");
 	}
 
 	void bind() 
@@ -45,6 +52,8 @@ public:
 
 	void init(const std::vector<GLuint>& indices, GLenum usage = GL_STATIC_DRAW)
 	{
+		skgl::log("EBO's init() called");
+
 		m_indices_n = indices.size();
 
 		if (m_id)

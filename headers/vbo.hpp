@@ -26,6 +26,7 @@ public:
 	// Methods
 	VBO()
 	{
+		skgl::log("VBO constructor invoked");
 		deleter = [](GLuint* ptr)
 		{
 			glDeleteBuffers(1, ptr);
@@ -35,6 +36,7 @@ public:
 
 	void init(const std::vector<Vertex>& vertices, GLenum usage = GL_STATIC_DRAW)
 	{
+		skgl::log("VBO init called");
 		m_verticies_n = vertices.size();
 
 		if (m_id)
@@ -61,6 +63,11 @@ public:
 	void unbind() 
 	{ 
 		glBindBuffer(GL_ARRAY_BUFFER, 0);  
+	}
+
+	~VBO()
+	{
+		skgl::log("VBO's destructor invoked");
 	}
 };
 

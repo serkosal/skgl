@@ -9,6 +9,7 @@ namespace skgl
 
 void Texture::init(const std::filesystem::path& path, bool flip, bool use_standart_dir)
 {
+    skgl::log("Texture's init() called");
     if (m_id)
         Texture::deleter(m_id.get());
 
@@ -54,6 +55,8 @@ void Texture::init(const std::filesystem::path& path, bool flip, bool use_standa
         stbi_image_free(data);
         throw std::runtime_error("Error to load texture file which is located: " + fstr);
     }
+
+    skgl::log("Texture is successfully inited");
 }
 
 } //namespace skgl
