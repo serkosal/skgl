@@ -8,6 +8,7 @@ set(SRCS
 	src/texture.cpp 
 	src/window.cpp
 	src/camera.cpp
+ 	"src/log.cpp"
 
 	examples/texture/main.cpp
  )
