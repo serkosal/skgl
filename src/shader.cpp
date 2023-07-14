@@ -5,8 +5,6 @@
 namespace skgl
 {
 
-std::filesystem::path Shader::standart_dir = "resources/shaders/";
-
 void Shader::init(const std::filesystem::path& path, bool use_standart_dir)
 {
     if (m_id)

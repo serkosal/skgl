@@ -16,7 +16,7 @@ class Texture : public GL_Object
 public:
 
     // Static data
-    static std::filesystem::path standart_dir;
+    inline static std::filesystem::path standart_dir = "resources/textures/";
 
 
     // Methods

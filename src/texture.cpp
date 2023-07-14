@@ -6,7 +6,6 @@
 namespace skgl
 {
 
-std::filesystem::path Texture::standart_dir = "resources/textures/";
 
 void Texture::init(const std::filesystem::path& path, bool flip, bool use_standart_dir)
 {
