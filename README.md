@@ -27,10 +27,12 @@ Open skgl folder in the terminal and execute the following commands:
 
 `mkdir build`
 
-`cmake -S . -B build/`
+`cd build`
+
+`cmake -S .. -B .`
 
 `make`
 
 And finally you can launch it using the following command:
 
-`./build/skgl`
+`./skgl`
