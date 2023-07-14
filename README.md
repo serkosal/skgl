@@ -3,11 +3,13 @@ skgl is the OpenGL boilerplate for avoid of writing routine code and focus on so
 
 # How to download
 This project uses git submodules so to download you should use:
-git clone --recurse-submodules https://github.com/serkosal/skgl.git 
+
+`git clone --recurse-submodules https://github.com/serkosal/skgl.git`
 
 If you've just already downloaded it without --recurse-submodules, you should go inside downloaded skgl folder and then execute:
-git submodule init
-git submodule update
+
+`git submodule init`
+`git submodule update`
 
 # How to build on windows using Microsoft Visual Studio
 1. Open skgl folder in Visual Studio.
