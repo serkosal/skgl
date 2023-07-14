@@ -27,8 +27,6 @@ Open skgl folder in the terminal and execute the following commands:
 
 `mkdir build`
 
-`cd build`
-
 `cmake -S . -B build/`
 
 `make`
