@@ -2,6 +2,7 @@
 #ifndef VBO_HPP
 #define VBO_HPP
 
+#include <cassert>
 #include <vector>
 
 #include "gl_object.hpp"
@@ -52,8 +53,15 @@ public:
 
 	size_t get_vert_num() { return m_verticies_n; }
 
-	void bind() { glBindBuffer(GL_ARRAY_BUFFER, *m_id); }
-	void unbind() { glBindBuffer(GL_ARRAY_BUFFER, 0);  }
+	void bind() 
+	{ 
+		assert( (*m_id) && "Tried to bind uninitialized Vertex Buffer Object (VBO) !\n");
+		glBindBuffer(GL_ARRAY_BUFFER, *m_id); 
+	}
+	void unbind() 
+	{ 
+		glBindBuffer(GL_ARRAY_BUFFER, 0);  
+	}
 };
 
 } //namespace skgl

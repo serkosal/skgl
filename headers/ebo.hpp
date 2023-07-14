@@ -4,6 +4,7 @@
 #ifndef EBO_HPP
 #define EBO_HPP
 
+#include <cassert>
 #include <vector>
 
 #include "gl_object.hpp"
@@ -33,7 +34,11 @@ public:
 		};
 	}
 
-	void bind() { glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, *m_id); }
+	void bind() 
+	{
+		assert((*m_id) && "Tried to bind uninitialized Element buffer object (EBO) !\n");
+		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, *m_id); 
+	}
 	void unbind() { glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0); }
 
 	size_t get_ind_num() { return m_indices_n; }

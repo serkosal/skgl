@@ -2,6 +2,7 @@
 #ifndef TEXTURE_HPP
 #define TEXTURE_HPP
 
+#include <cassert>
 #include <filesystem>
 
 #include <glad/glad.h>
@@ -45,7 +46,11 @@ public:
         init(path, flip, use_standart_dir);
     }
 
-    void bind() const { glBindTexture(GL_TEXTURE_2D, *m_id); }
+    void bind() const 
+    { 
+        assert((*m_id) && "Tried to bind uninitialized texture!\n");
+        glBindTexture(GL_TEXTURE_2D, *m_id); 
+    }
     void unbind() const { glBindTexture(GL_TEXTURE_2D, 0); }
 };
 

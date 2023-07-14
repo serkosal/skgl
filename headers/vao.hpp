@@ -2,6 +2,8 @@
 #ifndef VAO_HPP
 #define VAO_HPP
 
+#include <cassert>
+
 #include "gl_object.hpp"
 
 #include "vbo.hpp"
@@ -54,7 +56,11 @@ public:
 	explicit VAO(VBO vbo) : VAO() { init(vbo); }
 	VAO(VBO vbo, EBO ebo) : VAO() { init(vbo, ebo); }
 
-	void bind() { glBindVertexArray(*m_id); }
+	void bind() 
+	{
+		assert((*m_id) && "Tried to bind uninitialized Vertex Array Object (VAO) !\n");
+		glBindVertexArray(*m_id); 
+	}
 	void unbind() { glBindVertexArray(0); }
 
 	void draw()

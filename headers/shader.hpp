@@ -44,7 +44,11 @@ public:
     }
 
 
-    void bind() { glUseProgram(*m_id); }
+    void bind() 
+    {
+        assert((*m_id) && "Tried to bind uninitialized shader program!\n");
+        glUseProgram(*m_id); 
+    }
     void unbind() { glUseProgram(*m_id); }
 
     //uniform setters
