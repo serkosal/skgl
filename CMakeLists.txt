@@ -7,9 +7,15 @@ set(SRCS
 	src/shader.cpp 
 	src/texture.cpp 
 	src/window.cpp
-)
+	src/camera.cpp
 
-add_library(skgl ${SRCS})
+	examples/texture/main.cpp
+ )
+
+add_executable(skgl ${SRCS})
+
+#add_library(skgl ${SRCS})
+
 
 set_property(TARGET skgl PROPERTY CXX_STANDARD 20)
 
@@ -19,6 +25,8 @@ add_subdirectory(external/glfw)
 # GLM
 add_subdirectory(external/glm)
 
+add_subdirectory(external/assimp)
+
 # INCLUDE 
 target_include_directories(${PROJECT_NAME}
 	PUBLIC headers
@@ -26,6 +34,7 @@ target_include_directories(${PROJECT_NAME}
 	PUBLIC "external/glm"
 	PUBLIC "external/glad/include"
 	PUBLIC "external/stb"
+	PUBLIC "external/assimp/include"
 )
 
 # LINK
