@@ -50,12 +50,12 @@ public:
     }
 
 
-    void bind() 
+    void bind() const
     {
         assert((*m_id) && "Tried to bind uninitialized shader program!\n");
         glUseProgram(*m_id); 
     }
-    void unbind() { glUseProgram(*m_id); }
+    void unbind() const { glUseProgram(*m_id); }
 
     //uniform setters
     void setBool(std::string_view name, bool value) const

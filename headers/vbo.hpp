@@ -53,14 +53,14 @@ public:
 		: VBO()
 	{ init(vertices, usage); }
 
-	size_t get_vert_num() { return m_verticies_n; }
+	size_t get_vert_num() const { return m_verticies_n; }
 
-	void bind() 
+	void bind() const
 	{ 
 		assert( (*m_id) && "Tried to bind uninitialized Vertex Buffer Object (VBO) !\n");
 		glBindBuffer(GL_ARRAY_BUFFER, *m_id); 
 	}
-	void unbind() 
+	void unbind() const
 	{ 
 		glBindBuffer(GL_ARRAY_BUFFER, 0);  
 	}

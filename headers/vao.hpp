@@ -65,14 +65,14 @@ public:
 	explicit VAO(VBO vbo) : VAO() { init(vbo); }
 	VAO(VBO vbo, EBO ebo) : VAO() { init(vbo, ebo); }
 
-	void bind() 
+	void bind() const
 	{
 		assert((*m_id) && "Tried to bind uninitialized Vertex Array Object (VAO) !\n");
 		glBindVertexArray(*m_id); 
 	}
-	void unbind() { glBindVertexArray(0); }
+	void unbind() const { glBindVertexArray(0); }
 
-	void draw()
+	void draw() const
 	{
 		bind();
 		m_vbo.bind();

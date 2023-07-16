@@ -41,14 +41,14 @@ public:
 		skgl::log("EBO's destructor invoked");
 	}
 
-	void bind() 
+	void bind() const
 	{
 		assert((*m_id) && "Tried to bind uninitialized Element buffer object (EBO) !\n");
 		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, *m_id); 
 	}
-	void unbind() { glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0); }
+	void unbind() const { glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0); }
 
-	size_t get_ind_num() { return m_indices_n; }
+	size_t get_ind_num() const { return m_indices_n; }
 
 	void init(const std::vector<GLuint>& indices, GLenum usage = GL_STATIC_DRAW)
 	{
