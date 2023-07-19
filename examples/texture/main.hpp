@@ -2,9 +2,6 @@
 #ifndef MAIN_HPP
 #define MAIN_HPP
 
-#include <glad/glad.h>
-#include <GLFW/glfw3.h>
-
 #include <iostream>
 
 #include "window.hpp"
@@ -22,10 +19,11 @@
 
 const std::vector<skgl::Vertex> vertices =
 {
-	{ {  0.5f,  0.5f, 0.0f }, /**/ {1.f, 1.f } }, // top right
-	{ {  0.5f, -0.5f, 0.0f }, /**/ {1.f, 0.f } }, // bottom right
-	{ { -0.5f, -0.5f, 0.0f }, /**/ {0.f, 0.f } }, // bottom left
-	{ { -0.5f,  0.5f, 0.0f }, /**/ {0.0, 1.f } }  // top left 
+	/*       position         *//*     normals      *//*    texture     */
+	{ {  0.5f,  0.5f, 0.0f }, /**/ {0.f, 0.f, 1.f}, /**/ {1.f, 1.f } }, // top right
+	{ {  0.5f, -0.5f, 0.0f }, /**/ {0.f, 0.f, 1.f}, /**/ {1.f, 0.f } }, // bottom right
+	{ { -0.5f, -0.5f, 0.0f }, /**/ {0.f, 0.f, 1.f}, /**/ {0.f, 0.f } }, // bottom left
+	{ { -0.5f,  0.5f, 0.0f }, /**/ {0.f, 0.f, 1.f}, /**/ {0.0, 1.f } }  // top left 
 };
 
 const std::vector<GLuint> indices = {  // note that we start from 0!

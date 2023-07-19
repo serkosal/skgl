@@ -14,9 +14,7 @@ namespace skgl
 struct Drawable
 {
 	// Data
-	Shader m_shader;
 	VAO m_vao;
-
 	glm::mat4 m_trans = glm::mat4(1.f);
 
 	// Methods
@@ -31,16 +29,16 @@ struct Drawable
 		skgl::log("Drawable's destructor invoked");
 	}
 
-	Drawable(Shader shader, VAO vao)
-		: m_shader(shader), m_vao(vao) {}
+	explicit Drawable(VAO vao)
+		: m_vao(vao) {}
 
-	virtual void draw(const Camera& camera)
+	virtual void draw(const Camera& camera, const Shader& shader) const
 	{
-		m_shader.bind();
+		shader.bind();
 
-		m_shader.setMat4("model", m_trans);
-		m_shader.setMat4("view", camera.look_at());
-		m_shader.setMat4("proj", camera.get_proj());
+		shader.setMat4("model", m_trans);
+		shader.setMat4("view", camera.look_at());
+		shader.setMat4("proj", camera.get_proj());
 
 		m_vao.draw();
 	}

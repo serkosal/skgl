@@ -8,6 +8,9 @@
 out/*
 build/*
 
+# Models, textures and other large files
+examples/model/resources/models/model/*
+
 # Compiled Object files
 *.slo
 *.lo
@@ -37,6 +40,9 @@ build/*
 *.exe
 *.out
 *.app
+
+# Log files
+*.log
 
 
 # Cmake ignored files
