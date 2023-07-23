@@ -3,6 +3,7 @@
 #define MODEL_HPP
 
 #include "drawable.hpp"
+#include "mesh.hpp"
 #include "shader.hpp"
 #include "log.hpp"
 #include "camera.hpp"
@@ -14,7 +15,7 @@
 
 namespace skgl {
 
-class Model
+class Model : public Drawable
 {
 public:
 
@@ -22,7 +23,7 @@ public:
 
 	inline static std::filesystem::path standart_dir = "resources/models/";
 
-	std::vector<Drawable> m_meshes;
+	std::vector<Mesh> m_meshes;
 
 	// Methods
 
@@ -41,12 +42,12 @@ public:
 		const std::filesystem::path& filename,
 		bool flipUV = false, 
 		bool use_standart_dir = true
-	): Model()
+	)	: Model()
 	{
 		init(filename);
 	}
 
-	void draw(const Camera& camera, Shader shader) const
+	void draw(const Camera& camera, const Shader& shader) const override
 	{
 		shader.bind();
 

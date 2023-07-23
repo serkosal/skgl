@@ -22,7 +22,6 @@ class Window
 	double m_old_time;
 	Coord m_old_mouse_pos;
 
-	GLFWwindow* m_ptr = nullptr;
 	static std::unique_ptr<Window> sm_instance;
 
 	struct Color
@@ -30,6 +29,7 @@ class Window
 		float r, g, b, a;
 	};
 public:
+	GLFWwindow* m_ptr = nullptr;
 	mutable Color clear_color = { 0.f, 0.f, 0.f, 1.f };
 
 // Enums

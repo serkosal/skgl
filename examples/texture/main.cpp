@@ -2,17 +2,15 @@
 
 int main()
 {
-	auto window = skgl::Window::create(1980, 1080, "skgl texture", true);
+	auto window = skgl::Window::create(800, 600, "skgl texture");
 	window->set_cursor_mode(skgl::Window::cursor_modes::disabled);
 
-	skgl::Drawable square;
-	skgl::Texture texture;
+	skgl::Mesh square;
 	skgl::Shader basic_shader;
 
 	try
 	{
-
-		texture.init("wall.jpg");
+		square.m_texture.init("wall.jpg");
 
 		basic_shader.init("texture");
 		square.m_vao = skgl::VAO(
@@ -51,6 +49,7 @@ int main()
 	{
 		float dt = window->elapsed_time();
 
+		// get and process cursor movements
 		{
 			auto offset = window->get_mouse_offset();
 			cam.rotate(dt * 30 * offset.x, {0, 1, 0});
@@ -81,7 +80,6 @@ int main()
 		window->clear();
 
 
-		texture.bind();
 		square.draw(cam, basic_shader);
 
 

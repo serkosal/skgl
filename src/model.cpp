@@ -35,31 +35,6 @@ void Model::init(
 
 	const aiNode* rootNode = scene->mRootNode;
 	process_node(rootNode, scene);
-
-	for (auto& mesh : m_meshes)
-	{
-		mesh.m_vao.bind();
-		mesh.m_vao.m_vbo.bind();
-		mesh.m_vao.m_ebo.bind();
-
-		mesh.m_vao.link(
-			0, 3, GL_FLOAT, false,
-			sizeof(skgl::Vertex),
-			offsetof(skgl::Vertex, skgl::Vertex::m_pos)
-		);
-
-		/*mesh.m_vao.link(
-			1, 3, GL_FLOAT, false,
-			sizeof(skgl::Vertex),
-			offsetof(skgl::Vertex, skgl::Vertex::m_nor)
-		);*/
-
-		mesh.m_vao.link(
-			1, 2, GL_FLOAT, false,
-			sizeof(skgl::Vertex),
-			offsetof(skgl::Vertex, skgl::Vertex::m_tex)
-		);
-	}
 }
 
 inline glm::mat4 to_glm_mat(const aiMatrix4x4& mat)
@@ -125,7 +100,34 @@ void skgl::Model::process_mesh(const aiMesh* mesh, const aiScene* scene, const g
 		indices.push_back(mesh->mFaces[i].mIndices[2]);
 	}
 
-	m_meshes.push_back( 
-		Drawable( VAO( VBO(vertices), EBO(indices)) )
+
+	m_meshes.push_back(
+		Mesh(VAO(VBO(vertices), EBO(indices)), Texture())
 	);
+
+	m_meshes.back().m_vao.bind();
+	m_meshes.back().m_vao.m_vbo.bind();
+	m_meshes.back().m_vao.m_ebo.bind();
+
+	m_meshes.back().m_vao.link(
+		0, 3, GL_FLOAT, false,
+		sizeof(skgl::Vertex),
+		offsetof(skgl::Vertex, skgl::Vertex::m_pos)
+	);
+
+	/*
+	m_meshes.back().m_vao.link(
+		1, 3, GL_FLOAT, false,
+		sizeof(skgl::Vertex),
+		offsetof(skgl::Vertex, skgl::Vertex::m_nor)
+	);
+	*/
+
+	/*
+	m_meshes.back().m_vao.link(
+		1, 2, GL_FLOAT, false,
+		sizeof(skgl::Vertex),
+		offsetof(skgl::Vertex, skgl::Vertex::m_tex)
+	);
+	*/
 }

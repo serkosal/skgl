@@ -12,6 +12,7 @@
 #include "vbo.hpp"
 #include "ebo.hpp"
 #include "vao.hpp"
+#include "mesh.hpp"
 
 #include "camera.hpp"
 #include "drawable.hpp"
