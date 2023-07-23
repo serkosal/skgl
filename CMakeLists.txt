@@ -70,9 +70,6 @@ target_include_directories("${PROJECT_NAME}"
 	PUBLIC "external/glad/include"
 	PUBLIC "external/stb"
 	PUBLIC "${ASSIMP_DIRECTORY}/include"
-
-	PUBLIC "external/imgui"
-	PUBLIC "external/imgui/backends"
 )
 
 # LINK DIRECTORIES
