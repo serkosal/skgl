@@ -24,7 +24,7 @@ set(SRCS
 	# Examples
 	#"examples/imgui_test/main.cpp"
 	#"examples/billboard/main.cpp"
-	"examples/model/main.cpp"
+	#"examples/model/main.cpp"
 	#"examples/texture/main.cpp"
 )
 
@@ -70,9 +70,6 @@ target_include_directories("${PROJECT_NAME}"
 	PUBLIC "external/glad/include"
 	PUBLIC "external/stb"
 	PUBLIC "${ASSIMP_DIRECTORY}/include"
-
-	PUBLIC "external/imgui"
-	PUBLIC "external/imgui/backends"
 )
 
 # LINK DIRECTORIES
