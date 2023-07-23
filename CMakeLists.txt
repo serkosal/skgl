@@ -22,9 +22,9 @@ set(SRCS
 
 
 	# Examples
-	"examples/imgui_test/main.cpp"
+	#"examples/imgui_test/main.cpp"
 	#"examples/billboard/main.cpp"
-	#"examples/model/main.cpp"
+	"examples/model/main.cpp"
 	#"examples/texture/main.cpp"
 )
 
