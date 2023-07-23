@@ -11,14 +11,25 @@ set(SRCS
 	"src/model.cpp"
 	"src/log.cpp"
 
+	# IMGUI
+	#"external/imgui/imgui.cpp"
+	#"external/imgui/imgui_draw.cpp"
+	#"external/imgui/imgui_tables.cpp"
+	#"external/imgui/imgui_widgets.cpp"
+	
+	#"external/imgui/backends/imgui_impl_glfw.cpp"
+	#"external/imgui/backends/imgui_impl_opengl3.cpp"
+
+
+	# Examples
+	#"examples/imgui_test/main.cpp"
+	"examples/billboard/main.cpp"
 	#"examples/model/main.cpp"
-	"examples/texture/main.cpp"
+	#"examples/texture/main.cpp"
 )
 
-add_executable(skgl ${SRCS})
-
 #add_library(skgl ${SRCS})
-
+add_executable(skgl ${SRCS})
 
 set_property(TARGET skgl PROPERTY CXX_STANDARD 20)
 
@@ -59,6 +70,9 @@ target_include_directories("${PROJECT_NAME}"
 	PUBLIC "external/glad/include"
 	PUBLIC "external/stb"
 	PUBLIC "${ASSIMP_DIRECTORY}/include"
+
+	#PUBLIC "external/imgui"
+	#PUBLIC "external/imgui/backends"
 )
 
 # LINK DIRECTORIES
