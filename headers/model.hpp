@@ -53,6 +53,7 @@ public:
 
 		shader.setMat4("view", camera.look_at());
 		shader.setMat4("proj", camera.get_proj());
+		shader.setVec3("viewPos", camera.m_pos);
 
 		for (const auto& el : m_meshes)
 		{

@@ -56,6 +56,8 @@ Window::Window(int width, int height, std::string_view title, bool is_fullscreen
 
 	m_old_time = glfwGetTime();
 	glfwGetCursorPos(m_ptr, &m_old_mouse_pos.x, &m_old_mouse_pos.y);
+
+	glEnable(GL_DEPTH_TEST);
 }
 
 Window* Window::create(int width, int height, std::string_view title, bool is_fullscreen)
@@ -91,7 +93,7 @@ bool Window::should_close() const
 void Window::clear() const
 {
 	glClearColor(clear_color.r, clear_color.b, clear_color.b, clear_color.a);
-	glClear(GL_COLOR_BUFFER_BIT);
+	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 }
 
 void Window::set_should_close(bool close)

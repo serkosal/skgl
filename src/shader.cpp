@@ -22,8 +22,8 @@ void Shader::init(const std::filesystem::path& path, bool use_standart_dir)
 
     auto path_no_ext = use_standart_dir ? standart_dir / path : path;
 
-    auto vertex_str = std::filesystem::absolute(path_no_ext).string() + ".vs";
-    auto fragment_str = std::filesystem::absolute(path_no_ext).string() + ".fs";
+    auto vertex_str = std::filesystem::absolute(path_no_ext).string() + ".vert";
+    auto fragment_str = std::filesystem::absolute(path_no_ext).string() + ".frag";
 
     vShaderFile.open(vertex_str);
     fShaderFile.open(fragment_str);

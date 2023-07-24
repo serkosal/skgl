@@ -115,13 +115,13 @@ void skgl::Model::process_mesh(const aiMesh* mesh, const aiScene* scene, const g
 		offsetof(skgl::Vertex, skgl::Vertex::m_pos)
 	);
 
-	/*
+	
 	m_meshes.back().m_vao.link(
 		1, 3, GL_FLOAT, false,
 		sizeof(skgl::Vertex),
 		offsetof(skgl::Vertex, skgl::Vertex::m_nor)
 	);
-	*/
+	
 
 	/*
 	m_meshes.back().m_vao.link(
