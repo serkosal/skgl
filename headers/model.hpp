@@ -58,6 +58,7 @@ public:
 		for (const auto& el : m_meshes)
 		{
 			shader.setMat4("model", el.m_trans);
+			el.m_mat.bind();
 			el.m_vao.draw();
 		}
 	}
@@ -68,8 +69,19 @@ public:
 	}
 
 private:
-	void process_node(const aiNode* node, const aiScene* scene, const glm::mat4& trans = glm::mat4(1.f));
-	void process_mesh(const aiMesh* mesh, const aiScene* scene, const glm::mat4& trans = glm::mat4(1.f));
+
+	void process_node(
+		const aiNode* node,
+		const aiScene* scene,
+		const std::vector<Material>& materials,
+		const glm::mat4& trans = glm::mat4(1.f)
+	);
+
+	void process_mesh(
+		const aiMesh* mesh,
+		const aiScene* scene,
+		const std::vector<Material>& materials,
+		const glm::mat4& trans = glm::mat4(1.f));
 };
 
 } // namespace skgl

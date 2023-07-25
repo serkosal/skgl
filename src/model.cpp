@@ -6,6 +6,8 @@
 #include <assimp/scene.h>
 #include <assimp/postprocess.h>
 
+#include <vector>
+
 using namespace skgl;
 
 void Model::init(
@@ -34,7 +36,36 @@ void Model::init(
 	}
 
 	const aiNode* rootNode = scene->mRootNode;
-	process_node(rootNode, scene);
+
+	std::vector<Material> materials(scene->mNumMaterials, Material());
+	for (size_t i = 0; i < scene->mNumMaterials; ++i)
+	{
+		auto material = scene->mMaterials[i];
+		aiString str;
+		if (material->GetTextureCount(aiTextureType_DIFFUSE))
+		{
+			material->GetTexture(aiTextureType_DIFFUSE, 0, &str);
+			std::string Str(str.C_Str());
+
+			materials[i].m_diffuse = Texture(
+				result_path.replace_filename("") / Str,
+				false, false
+			);
+
+		}
+		if (material->GetTextureCount(aiTextureType_SPECULAR))
+		{
+			material->GetTexture(aiTextureType_SPECULAR, 0, &str);
+			std::string Str(str.C_Str());
+
+			materials[i].m_specular = Texture(
+				result_path.replace_filename("") / Str,
+				false, false
+			);
+		}
+	}
+
+	process_node(rootNode, scene, materials);
 }
 
 inline glm::mat4 to_glm_mat(const aiMatrix4x4& mat)
@@ -47,16 +78,26 @@ inline glm::mat4 to_glm_mat(const aiMatrix4x4& mat)
 	);
 }
 
-void Model::process_node(const aiNode* node, const aiScene* scene, const glm::mat4& trans)
+void Model::process_node(
+	const aiNode* node,
+	const aiScene* scene,
+	const std::vector<Material>& materials,
+	const glm::mat4& trans
+)
 {
 	for (size_t meshNum = 0; meshNum < node->mNumMeshes; ++meshNum)
-		process_mesh(scene->mMeshes[node->mMeshes[meshNum]], scene, trans);
+		process_mesh(scene->mMeshes[node->mMeshes[meshNum]], scene, materials, trans);
 
 	for (size_t childNum = 0; childNum < node->mNumChildren; ++childNum)
-		process_node(node->mChildren[childNum], scene, glm::mat4(1.f));
+		process_node(node->mChildren[childNum], scene, materials, glm::mat4(1.f));
 }
 
-void skgl::Model::process_mesh(const aiMesh* mesh, const aiScene* scene, const glm::mat4& trans)
+void skgl::Model::process_mesh(
+	const aiMesh* mesh,
+	const aiScene* scene,
+	const std::vector<Material>& materials,
+	const glm::mat4& trans
+)
 {
 	std::vector<Vertex> vertices;
 	vertices.reserve(mesh->mNumVertices);
@@ -92,7 +133,6 @@ void skgl::Model::process_mesh(const aiMesh* mesh, const aiScene* scene, const g
 
 	std::vector<GLuint> indices;
 	indices.reserve(mesh->mNumFaces * 3ULL);
-
 	for (size_t i = 0; i < mesh->mNumFaces; ++i)
 	{
 		indices.push_back(mesh->mFaces[i].mIndices[0]);
@@ -100,10 +140,12 @@ void skgl::Model::process_mesh(const aiMesh* mesh, const aiScene* scene, const g
 		indices.push_back(mesh->mFaces[i].mIndices[2]);
 	}
 
-
 	m_meshes.push_back(
-		Mesh(VAO(VBO(vertices), EBO(indices)), Texture())
+		Mesh(VAO(VBO(vertices), EBO(indices)), Material())
 	);
+
+
+	m_meshes.back().m_mat = materials[mesh->mMaterialIndex];
 
 	m_meshes.back().m_vao.bind();
 	m_meshes.back().m_vao.m_vbo.bind();
@@ -115,19 +157,15 @@ void skgl::Model::process_mesh(const aiMesh* mesh, const aiScene* scene, const g
 		offsetof(skgl::Vertex, skgl::Vertex::m_pos)
 	);
 
-	
 	m_meshes.back().m_vao.link(
 		1, 3, GL_FLOAT, false,
 		sizeof(skgl::Vertex),
 		offsetof(skgl::Vertex, skgl::Vertex::m_nor)
 	);
-	
 
-	/*
 	m_meshes.back().m_vao.link(
-		1, 2, GL_FLOAT, false,
+		2, 2, GL_FLOAT, false,
 		sizeof(skgl::Vertex),
 		offsetof(skgl::Vertex, skgl::Vertex::m_tex)
 	);
-	*/
 }

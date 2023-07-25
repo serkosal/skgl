@@ -18,6 +18,8 @@ public:
 
 	// Constuctors
 
+	operator bool() const { return bool(m_id); }
+
 	GL_Object() 
 	{
 		skgl::log("GL_Object constructor invoked");

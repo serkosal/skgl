@@ -21,7 +21,7 @@ int main(int argc, char** argv)
 	{
 		skgl::Window::create(800, 600, "skgl model");
 		basic_shader.init("model");
-		model.init("model/scene.gltf");
+		model.init("model/scene.gltf", true);
 	}
 	catch (const std::exception& e)
 	{
@@ -127,6 +127,8 @@ int main(int argc, char** argv)
 
 		ImGui::Render();
 		window->clear();
+
+		cam.m_aspect_ratio = window->aspect_ratio();
 
 		light.apply(basic_shader);
 		model.draw(cam, basic_shader);

@@ -11,13 +11,14 @@ uniform vec3 lightPos;
 uniform vec3 lightColor;
 uniform vec3 viewPos;
 
+uniform sampler2D diffuseTexture;
+//uniform sampler2D specularTexture;
+
 void main()
 {
-    const vec3 objectColor = vec3(1.0);
-
     //ambient
     const float ambientStrength = 0.1f;
-    vec3 ambient = ambientStrength * objectColor;
+    vec3 ambient = ambientStrength * lightColor;
 
     //diffuse 
     vec3 norm = normalize(Normal);
@@ -35,7 +36,8 @@ void main()
     vec3 specular = specularStrength * spec * lightColor;
 
     // result
-    vec3 result = (ambient + diffuse + specular) * objectColor;
+    vec3 result = (ambient + diffuse) * vec3(texture(diffuseTexture, TexCoord)) + specular;
+    //result += spec * vec3(texture(specularTexture, TexCoord));
 
     FragColor = vec4(result, 1.0);
 }
