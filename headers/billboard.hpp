@@ -9,14 +9,15 @@
 #include "camera.hpp"
 #include "drawable.hpp"
 #include "shader.hpp"
+#include "shapes.hpp"
 #include "texture.hpp"
-#include "vao.hpp"
+
 
 namespace skgl {
 
 struct Billboard : public Drawable
 {
-	VAO m_vao;
+	const VAO& m_vao = Shapes::Quad();
 	Texture m_texture;
 
 	glm::vec3 m_pos{0.f};
@@ -48,22 +49,11 @@ struct Billboard : public Drawable
 		m_vao.draw();
 	}
 
-	Billboard()
+	Billboard() {}
+	explicit Billboard(Texture texture)
+		: Billboard()
 	{
-		m_vao = VAO(
-
-			VBO(std::vector<skgl::Vertex>{
-				{ {  0.5f, 0.5f, 0.0f }, /**/{ 0.f, 0.f, 1.f }, /**/{ 1.f, 1.f } }, // top right
-				{ {  0.5f, -0.5f, 0.0f }, /**/ {0.f, 0.f, 1.f}, /**/ {1.f, 0.f } }, // bottom right
-				{ { -0.5f, -0.5f, 0.0f }, /**/ {0.f, 0.f, 1.f}, /**/ {0.f, 0.f } }, // bottom left
-				{ { -0.5f,  0.5f, 0.0f }, /**/ {0.f, 0.f, 1.f}, /**/ {0.0, 1.f } }  // top left 
-			}),
-
-			EBO(std::vector<GLuint>{
-				0, 1, 3,
-				1, 2, 3
-			})
-		);
+		m_texture = texture;
 	}
 };
 

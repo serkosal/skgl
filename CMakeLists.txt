@@ -3,13 +3,19 @@ cmake_minimum_required(VERSION 3.20)
 project(skgl)
 
 set(SRCS
-	"external/glad/glad.c"
-	"src/shader.cpp"
-	"src/texture.cpp" 
-	"src/window.cpp"
 	"src/camera.cpp"
-	"src/model.cpp"
+	"src/gl_buffer_objects.cpp"
 	"src/log.cpp"
+	"src/material.cpp"
+	"src/model.cpp"
+	"src/shader.cpp"
+	"src/shapes.cpp"
+	"src/texture.cpp" 
+	"src/vao.cpp"
+	"src/window.cpp"
+
+	# GLAD
+	"external/glad/glad.c"
 
 	# IMGUI
 	"external/imgui/imgui.cpp"

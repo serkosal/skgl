@@ -1,9 +1,36 @@
 #include "shader.hpp"
 
+#include <glad/glad.h>
+
 #include <iostream>
 
-namespace skgl
+using namespace skgl;
+
+Shader::Shader()
 {
+    skgl::log("Shader's constructor invoked");
+    deleter = [](GLuint* ptr)
+    {
+        glDeleteProgram(*ptr);
+        delete ptr;
+    };
+}
+
+Shader::~Shader()
+{
+    skgl::log("Shader's destructor invoked");
+}
+
+void Shader::bind() const
+{
+    assert((*m_id) && "Tried to bind uninitialized shader program!\n");
+    glUseProgram(*m_id);
+}
+
+void Shader::unbind() const
+{
+    glUseProgram(*m_id);
+}
 
 void Shader::init(const std::filesystem::path& path, bool use_standart_dir)
 {
@@ -75,7 +102,7 @@ void Shader::init(const std::filesystem::path& path, bool use_standart_dir)
 }
 
 
-void Shader::check_errors(GLuint id, std::string type) const
+void Shader::check_errors(unsigned int id, std::string type) const
 {
     GLint success;
     GLchar infoLog[1024];
@@ -99,5 +126,59 @@ void Shader::check_errors(GLuint id, std::string type) const
     }
 }
 
-
-} //namespace skgl
+void Shader::setBool(std::string_view name, bool value) const
+{
+    glUniform1i(glGetUniformLocation(*m_id, name.data()), (int)value);
+}
+// ------------------------------------------------------------------------
+void Shader::setInt(std::string_view name, int value) const
+{
+    glUniform1i(glGetUniformLocation(*m_id, name.data()), value);
+}
+// ------------------------------------------------------------------------
+void Shader::setFloat(std::string_view name, float value) const
+{
+    glUniform1f(glGetUniformLocation(*m_id, name.data()), value);
+}
+// ------------------------------------------------------------------------
+void Shader::setVec2(std::string_view name, const glm::vec2& value) const
+{
+    glUniform2fv(glGetUniformLocation(*m_id, name.data()), 1, &value[0]);
+}
+void Shader::setVec2(std::string_view name, float x, float y) const
+{
+    glUniform2f(glGetUniformLocation(*m_id, name.data()), x, y);
+}
+// ------------------------------------------------------------------------
+void Shader::setVec3(std::string_view name, const glm::vec3& value) const
+{
+    glUniform3fv(glGetUniformLocation(*m_id, name.data()), 1, &value[0]);
+}
+void Shader::setVec3(std::string_view name, float x, float y, float z) const
+{
+    glUniform3f(glGetUniformLocation(*m_id, name.data()), x, y, z);
+}
+// ------------------------------------------------------------------------
+void Shader::setVec4(std::string_view name, const glm::vec4& value) const
+{
+    glUniform4fv(glGetUniformLocation(*m_id, name.data()), 1, &value[0]);
+}
+void Shader::setVec4(std::string_view name, float x, float y, float z, float w) const
+{
+    glUniform4f(glGetUniformLocation(*m_id, name.data()), x, y, z, w);
+}
+// ------------------------------------------------------------------------
+void Shader::setMat2(std::string_view name, const glm::mat2& mat) const
+{
+    glUniformMatrix2fv(glGetUniformLocation(*m_id, name.data()), 1, GL_FALSE, &mat[0][0]);
+}
+// ------------------------------------------------------------------------
+void Shader::setMat3(std::string_view name, const glm::mat3& mat) const
+{
+    glUniformMatrix3fv(glGetUniformLocation(*m_id, name.data()), 1, GL_FALSE, &mat[0][0]);
+}
+// ------------------------------------------------------------------------
+void Shader::setMat4(std::string_view name, const glm::mat4& mat) const
+{
+    glUniformMatrix4fv(glGetUniformLocation(*m_id, name.data()), 1, GL_FALSE, &mat[0][0]);
+}

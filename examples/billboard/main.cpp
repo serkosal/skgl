@@ -6,12 +6,7 @@ int main(int argc, char** argv)
 {
 	auto window = skgl::Window::create(800, 600, "skgl billboard");
 
-	skgl::Billboard billboard;
-	billboard.m_texture.init("wall.jpg");
-
-	billboard.m_vao.link(0, 3, GL_FLOAT, false, sizeof(skgl::Vertex), offsetof(skgl::Vertex, skgl::Vertex::m_pos));
-	billboard.m_vao.link(1, 3, GL_FLOAT, false, sizeof(skgl::Vertex), offsetof(skgl::Vertex, skgl::Vertex::m_nor));
-	billboard.m_vao.link(2, 2, GL_FLOAT, false, sizeof(skgl::Vertex), offsetof(skgl::Vertex, skgl::Vertex::m_tex));
+	skgl::Billboard billboard(skgl::Texture("wall.jpg"));
 
 	skgl::Camera cam;
 	skgl::Shader billboard_shader("billboard");
@@ -20,35 +15,35 @@ int main(int argc, char** argv)
 	{
 		float dt = window->elapsed_time();
 
-		if (window->is_pressed(skgl::Window::keys::escape))
+		if (window->is_key_pressed(skgl::Window::keys::escape))
 			window->set_should_close();
 
-		if (window->is_pressed(skgl::Window::keys::s))
+		if (window->is_key_pressed(skgl::Window::keys::s))
 			cam.move(dt * -cam.get_dir());
-		if (window->is_pressed(skgl::Window::keys::w))
+		if (window->is_key_pressed(skgl::Window::keys::w))
 			cam.move(dt * cam.get_dir());
-		if (window->is_pressed(skgl::Window::keys::a))
+		if (window->is_key_pressed(skgl::Window::keys::a))
 			cam.move(dt * -cam.get_right());
-		if (window->is_pressed(skgl::Window::keys::d))
+		if (window->is_key_pressed(skgl::Window::keys::d))
 			cam.move(dt * cam.get_right());
 
-		if (window->is_pressed(skgl::Window::keys::space))
+		if (window->is_key_pressed(skgl::Window::keys::space))
 			cam.move(dt * cam.get_up());
-		if (window->is_pressed(skgl::Window::keys::left_shift))
+		if (window->is_key_pressed(skgl::Window::keys::left_shift))
 			cam.move(dt * -cam.get_up());
 
-		if (window->is_pressed(skgl::Window::keys::q))
+		if (window->is_key_pressed(skgl::Window::keys::q))
 			cam.rotate(-dt * 55.f, cam.get_dir());
-		if (window->is_pressed(skgl::Window::keys::e))
+		if (window->is_key_pressed(skgl::Window::keys::e))
 			cam.rotate(dt * 55.f, cam.get_dir());
 
-		if (window->is_pressed(skgl::Window::keys::up))
+		if (window->is_key_pressed(skgl::Window::keys::up))
 			cam.rotate(dt * 55.f, cam.get_right());
-		if (window->is_pressed(skgl::Window::keys::down))
+		if (window->is_key_pressed(skgl::Window::keys::down))
 			cam.rotate(-dt * 55.f, cam.get_right());
-		if (window->is_pressed(skgl::Window::keys::left))
+		if (window->is_key_pressed(skgl::Window::keys::left))
 			cam.rotate(dt * 55.f, cam.get_up());
-		if (window->is_pressed(skgl::Window::keys::right))
+		if (window->is_key_pressed(skgl::Window::keys::right))
 			cam.rotate(-dt * 55.f, cam.get_up());
 
 		window->clear();

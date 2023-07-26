@@ -1,10 +1,11 @@
 #include "texture.hpp"
 
+#include <glad/glad.h>
+
 #define STB_IMAGE_IMPLEMENTATION
 #include <stb_image.h>
 
-namespace skgl
-{
+using namespace skgl;
 
 
 void Texture::init(const std::filesystem::path& path, bool flip, bool use_standart_dir)
@@ -59,4 +60,19 @@ void Texture::init(const std::filesystem::path& path, bool flip, bool use_standa
     skgl::log("Texture is successfully inited");
 }
 
-} //namespace skgl
+Texture::Texture()
+{
+    skgl::log("Texture's constructor invoked");
+    deleter = [](GLuint* ptr)
+    {
+        glDeleteTextures(1, ptr);
+        delete ptr;
+    };
+}
+
+void Texture::bind() const
+{
+    assert((*m_id) && "Tried to bind uninitialized texture!\n");
+    glBindTexture(GL_TEXTURE_2D, *m_id);
+}
+void Texture::unbind() const { glBindTexture(GL_TEXTURE_2D, 0); }

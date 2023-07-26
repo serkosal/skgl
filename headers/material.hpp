@@ -17,19 +17,7 @@ struct Material
 		: m_diffuse(diffuse), m_specular(specular)
 	{}
 
-	void bind() const
-	{
-		if (m_diffuse)
-		{
-			glActiveTexture(GL_TEXTURE0);
-			m_diffuse.bind();
-		}
-		if (m_specular)
-		{
-			glActiveTexture(GL_TEXTURE1);
-			m_specular.bind();
-		}
-	}
+	void bind() const;
 };
 
 } // namespace skgl

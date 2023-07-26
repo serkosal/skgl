@@ -2,6 +2,8 @@
 
 #include <glm/glm.hpp>
 
+#include <glad/glad.h>
+
 #include <assimp/Importer.hpp>
 #include <assimp/scene.h>
 #include <assimp/postprocess.h>
@@ -56,6 +58,16 @@ void Model::init(
 		if (material->GetTextureCount(aiTextureType_SPECULAR))
 		{
 			material->GetTexture(aiTextureType_SPECULAR, 0, &str);
+			std::string Str(str.C_Str());
+
+			materials[i].m_specular = Texture(
+				result_path.replace_filename("") / Str,
+				false, false
+			);
+		}
+		else if (material->GetTextureCount(aiTextureType_METALNESS))
+		{
+			material->GetTexture(aiTextureType_METALNESS, 0, &str);
 			std::string Str(str.C_Str());
 
 			materials[i].m_specular = Texture(

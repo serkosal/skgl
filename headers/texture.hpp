@@ -2,10 +2,7 @@
 #ifndef TEXTURE_HPP
 #define TEXTURE_HPP
 
-#include <cassert>
 #include <filesystem>
-
-#include <glad/glad.h>
 
 #include "gl_object.hpp"
 
@@ -22,15 +19,7 @@ public:
 
     // Methods
 
-    Texture()
-    {
-        skgl::log("Texture's constructor invoked");
-        deleter = [](GLuint* ptr)
-        {
-            glDeleteTextures(1, ptr);
-            delete ptr;
-        };
-    }
+    Texture();
     
     void init(
         const std::filesystem::path& path,
@@ -47,12 +36,8 @@ public:
         init(path, flip, use_standart_dir);
     }
 
-    void bind() const 
-    { 
-        assert((*m_id) && "Tried to bind uninitialized texture!\n");
-        glBindTexture(GL_TEXTURE_2D, *m_id); 
-    }
-    void unbind() const { glBindTexture(GL_TEXTURE_2D, 0); }
+    void bind() const;
+    void unbind() const;
 };
 
 } //namespace skgl

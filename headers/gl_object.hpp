@@ -4,8 +4,6 @@
 
 #include <memory>
 
-#include <glad/glad.h>
-
 #define SK_LOGGING
 #include "log.hpp"
 
@@ -14,6 +12,8 @@ namespace skgl
 
 class GL_Object
 {
+private:
+	using SKuint = unsigned int;
 public:
 
 	// Constuctors
@@ -31,18 +31,18 @@ public:
 protected:
 
 	// Data
-	std::shared_ptr<GLuint> m_id;
+	std::shared_ptr<SKuint> m_id;
 
 
 	// Methods
-	void (*deleter)(GLuint* ptr) = [](GLuint* ptr)
+	void (*deleter)(SKuint* ptr) = [](SKuint* ptr)
 	{
 		delete ptr;
 	};
 
-	void set_id(GLuint id)
+	void set_id(unsigned int id)
 	{
-		m_id = std::shared_ptr<GLuint>(new GLuint(id), deleter);
+		m_id = std::shared_ptr<SKuint>(new SKuint(id), deleter);
 	}
 
 

@@ -2,7 +2,6 @@
 #ifndef SHADER_HPP
 #define SHADER_HPP
 
-#include <glad/glad.h>
 #include <glm/glm.hpp>
 
 #include <filesystem>
@@ -24,20 +23,9 @@ public:
 
     // Methods
 
-    Shader() 
-    { 
-        skgl::log("Shader's constructor invoked");
-        deleter = [](GLuint* ptr)
-        {
-            glDeleteProgram(*ptr);
-            delete ptr;
-        };
-    }
+    Shader();
 
-    ~Shader()
-    {
-        skgl::log("Shader's destructor invoked");
-    }
+    ~Shader();
 
 
     void init(const std::filesystem::path& path, bool use_standart_dir = true);
@@ -50,72 +38,24 @@ public:
     }
 
 
-    void bind() const
-    {
-        assert((*m_id) && "Tried to bind uninitialized shader program!\n");
-        glUseProgram(*m_id); 
-    }
-    void unbind() const { glUseProgram(*m_id); }
+    void bind() const;
+    void unbind() const;
 
     //uniform setters
-    void setBool(std::string_view name, bool value) const
-    {
-        glUniform1i(glGetUniformLocation(*m_id, name.data()), (int)value);
-    }
-    // ------------------------------------------------------------------------
-    void setInt(std::string_view name, int value) const
-    {
-        glUniform1i(glGetUniformLocation(*m_id, name.data()), value);
-    }
-    // ------------------------------------------------------------------------
-    void setFloat(std::string_view name, float value) const
-    {
-        glUniform1f(glGetUniformLocation(*m_id, name.data()), value);
-    }
-    // ------------------------------------------------------------------------
-    void setVec2(std::string_view name, const glm::vec2& value) const
-    {
-        glUniform2fv(glGetUniformLocation(*m_id, name.data()), 1, &value[0]);
-    }
-    void setVec2(std::string_view name, float x, float y) const
-    {
-        glUniform2f(glGetUniformLocation(*m_id, name.data()), x, y);
-    }
-    // ------------------------------------------------------------------------
-    void setVec3(std::string_view name, const glm::vec3& value) const
-    {
-        glUniform3fv(glGetUniformLocation(*m_id, name.data()), 1, &value[0]);
-    }
-    void setVec3(std::string_view name, float x, float y, float z) const
-    {
-        glUniform3f(glGetUniformLocation(*m_id, name.data()), x, y, z);
-    }
-    // ------------------------------------------------------------------------
-    void setVec4(std::string_view name, const glm::vec4& value) const
-    {
-        glUniform4fv(glGetUniformLocation(*m_id, name.data()), 1, &value[0]);
-    }
-    void setVec4(std::string_view name, float x, float y, float z, float w) const
-    {
-        glUniform4f(glGetUniformLocation(*m_id, name.data()), x, y, z, w);
-    }
-    // ------------------------------------------------------------------------
-    void setMat2(std::string_view name, const glm::mat2& mat) const
-    {
-        glUniformMatrix2fv(glGetUniformLocation(*m_id, name.data()), 1, GL_FALSE, &mat[0][0]);
-    }
-    // ------------------------------------------------------------------------
-    void setMat3(std::string_view name, const glm::mat3& mat) const
-    {
-        glUniformMatrix3fv(glGetUniformLocation(*m_id, name.data()), 1, GL_FALSE, &mat[0][0]);
-    }
-    // ------------------------------------------------------------------------
-    void setMat4(std::string_view name, const glm::mat4& mat) const
-    {
-        glUniformMatrix4fv(glGetUniformLocation(*m_id, name.data()), 1, GL_FALSE, &mat[0][0]);
-    }
+    void setBool(std::string_view name, bool value) const;
+    void setInt(std::string_view name, int value) const;
+    void setFloat(std::string_view name, float value) const;
+    void setVec2(std::string_view name, const glm::vec2& value) const;
+    void setVec2(std::string_view name, float x, float y) const;
+    void setVec3(std::string_view name, const glm::vec3& value) const;
+    void setVec3(std::string_view name, float x, float y, float z) const;
+    void setVec4(std::string_view name, const glm::vec4& value) const;
+    void setVec4(std::string_view name, float x, float y, float z, float w) const;
+    void setMat2(std::string_view name, const glm::mat2& mat) const;
+    void setMat3(std::string_view name, const glm::mat3& mat) const;
+    void setMat4(std::string_view name, const glm::mat4& mat) const;
 private:
-    void check_errors(GLuint id, std::string type) const;
+    void check_errors(unsigned int id, std::string type) const;
 };
 
 } //namespace skgl

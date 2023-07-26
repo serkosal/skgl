@@ -1,22 +1,27 @@
-#include "main.hpp"
+#include <iostream>
+
+#include "window.hpp"
+
+#include "shader.hpp"
+#include "texture.hpp"
+
+#include "shapes.hpp"
+
+#include "camera.hpp"
 
 int main()
 {
 	auto window = skgl::Window::create(800, 600, "skgl texture");
 	window->set_cursor_mode(skgl::Window::cursor_modes::disabled);
 
-	skgl::Mesh square;
+	skgl::Texture texture;
 	skgl::Shader basic_shader;
+	auto quad = skgl::Shapes::Quad();
 
 	try
 	{
-		square.m_texture.init("wall.jpg");
-
+		texture.init("wall.jpg");
 		basic_shader.init("texture");
-		square.m_vao = skgl::VAO(
-			(skgl::VBO(vertices)),
-			(skgl::EBO(indices))
-		);
 	}
 	catch (const std::exception& e)
 	{
@@ -31,19 +36,13 @@ int main()
 		return 1;
 	}
 
-	square.m_vao.link(0, 3, GL_FLOAT, false,
-		sizeof(skgl::Vertex),
-		offsetof(skgl::Vertex, skgl::Vertex::m_pos)
-	);
-
-	square.m_vao.link(2, 2, GL_FLOAT, false,
-		sizeof(skgl::Vertex),
-		offsetof(skgl::Vertex, skgl::Vertex::m_tex)
-	);
-
 	skgl::Camera cam;
-	cam.m_aspect_ratio = 1980 / 1080.f;
 	cam.m_pos = { 0.f, 0.f, -2.f };
+
+	basic_shader.bind();
+	texture.bind();
+	basic_shader.setMat4("model", glm::mat4(1.f));
+
 
 	while (!window->should_close())
 	{
@@ -57,30 +56,35 @@ int main()
 		}
 			
 
-		if (window->is_pressed(skgl::Window::keys::q))
+		if (window->is_key_pressed(skgl::Window::keys::q))
 			window->set_should_close();
 
-		if (window->is_pressed(skgl::Window::keys::s))
+		if (window->is_key_pressed(skgl::Window::keys::s))
 			cam.move(dt * -cam.get_dir());
 
-		if (window->is_pressed(skgl::Window::keys::w))
+		if (window->is_key_pressed(skgl::Window::keys::w))
 			cam.move(dt * cam.get_dir());
 
-		if (window->is_pressed(skgl::Window::keys::a))
+		if (window->is_key_pressed(skgl::Window::keys::a))
 			cam.move(dt * -cam.get_right());
 
-		if (window->is_pressed(skgl::Window::keys::d))
+		if (window->is_key_pressed(skgl::Window::keys::d))
 			cam.move(dt * cam.get_right());
 
-		if (window->is_pressed(skgl::Window::keys::space))
+		if (window->is_key_pressed(skgl::Window::keys::space))
 			cam.move(dt * glm::vec3{0, 1, 0});
-		if (window->is_pressed(skgl::Window::keys::left_shift))
+		if (window->is_key_pressed(skgl::Window::keys::left_shift))
 			cam.move(dt * glm::vec3{0, -1, 0});
 
 		window->clear();
 
+		cam.m_aspect_ratio = window->aspect_ratio();
+		basic_shader.setMat4("proj", cam.get_proj());
 
-		square.draw(cam, basic_shader);
+		basic_shader.setMat4("view", cam.look_at());
+
+
+		quad.draw();
 
 
 		window->swap_buffers();
