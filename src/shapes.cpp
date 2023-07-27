@@ -22,4 +22,6 @@ void Shapes::create_quad()
 	m_quad_vao.link(0, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), offsetof(Vertex, Vertex::m_pos));
 	m_quad_vao.link(1, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), offsetof(Vertex, Vertex::m_nor));
 	m_quad_vao.link(2, 2, GL_FLOAT, GL_FALSE, sizeof(Vertex), offsetof(Vertex, Vertex::m_tex));
+
+	m_quad_is_created = true;
 }
