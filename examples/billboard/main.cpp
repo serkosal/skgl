@@ -9,7 +9,7 @@ int main(int argc, char** argv)
 	skgl::Billboard billboard(skgl::Texture("wall.jpg"));
 
 	skgl::Camera cam;
-	skgl::Shader billboard_shader("billboard");
+	skgl::Program billboard_program({ "billboard.vert" }, { "billboard.frag" });
 
 	while (!window->should_close())
 	{
@@ -49,7 +49,7 @@ int main(int argc, char** argv)
 		window->clear();
 
 
-		billboard.draw(cam, billboard_shader);
+		billboard.draw(cam, billboard_program);
 
 
 		window->swap_buffers();

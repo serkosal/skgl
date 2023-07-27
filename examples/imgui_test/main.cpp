@@ -33,7 +33,7 @@ int main()
 	skgl::Billboard billboard(skgl::Texture("wall.jpg"));
 
 	skgl::Camera cam;
-	skgl::Shader billboard_shader("billboard");
+	skgl::Program billboard_shader({ "billboard.vert" }, {"billboard.frag"});
 
 	while (!window->should_close())
 	{

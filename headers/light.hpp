@@ -17,12 +17,12 @@ struct Light
 	Light(const glm::vec3& pos, const glm::vec3& color)
 		: m_pos(pos), m_color(color) {}
 
-	void apply(const Shader& shader) const
+	void apply(const Program& program) const
 	{
-		shader.bind();
+		program.bind();
 
-		shader.setVec3("lightPos", m_pos);
-		shader.setVec3("lightColor", m_color);
+		program.set_vec("lightPos", m_pos);
+		program.set_vec("lightColor", m_color);
 	}
 };
 

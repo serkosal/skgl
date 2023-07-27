@@ -24,15 +24,15 @@ struct Mesh : public Drawable
 		const glm::mat4& trans = glm::mat4(1.f)
 	)	: m_vao(vao), m_mat(material), m_trans(trans) {}
 
-	void draw(const Camera& camera, const Shader& shader) const override
+	void draw(const Camera& camera, const Program& program) const override
 	{
-		shader.bind();
+		program.bind();
 
-		m_mat.bind();
+		program.bind();
 
-		shader.setMat4("model", m_trans);
-		shader.setMat4("view", camera.look_at());
-		shader.setMat4("proj", camera.get_proj());
+		program.set_mat("model", m_trans);
+		program.set_mat("view", camera.look_at());
+		program.set_mat("proj", camera.get_proj());
 
 		m_vao.draw();
 	}

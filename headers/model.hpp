@@ -47,17 +47,17 @@ public:
 		init(filename);
 	}
 
-	void draw(const Camera& camera, const Shader& shader) const override
+	void draw(const Camera& camera, const Program& program) const override
 	{
-		shader.bind();
+		program.bind();
 
-		shader.setMat4("view", camera.look_at());
-		shader.setMat4("proj", camera.get_proj());
-		shader.setVec3("viewPos", camera.m_pos);
+		program.set_mat("view", camera.look_at());
+		program.set_mat("proj", camera.get_proj());
+		program.set_vec("viewPos", camera.m_pos);
 
 		for (const auto& el : m_meshes)
 		{
-			shader.setMat4("model", el.m_trans);
+			program.set_mat("model", el.m_trans);
 			el.m_mat.bind();
 			el.m_vao.draw();
 		}

@@ -13,14 +13,14 @@
 
 int main(int argc, char** argv)
 {
-	skgl::Shader basic_shader;
+	skgl::Program basic_program;
 
 	skgl::Model model;
 
 	try
 	{
 		skgl::Window::create(800, 600, "skgl model");
-		basic_shader.init("model");
+		basic_program.init({ "model.vert" }, { "model.frag" });
 		model.init("model/scene.gltf", true);
 	}
 	catch (const std::exception& e)
@@ -130,8 +130,8 @@ int main(int argc, char** argv)
 
 		cam.m_aspect_ratio = window->aspect_ratio();
 
-		light.apply(basic_shader);
-		model.draw(cam, basic_shader);
+		light.apply(basic_program);
+		model.draw(cam, basic_program);
 
 		ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
 

@@ -13,49 +13,78 @@
 namespace skgl
 {
 
-class Shader : public GL_Object
+class Program;
+
+struct Shader : public GL_Object
 {
-public:
+    friend class Program;
 
-    // Static data
-    inline static std::filesystem::path standart_dir = "resources/shaders/";
+    inline static std::filesystem::path std_dir = "resources/shaders/";
 
+    enum class types
+    {
+        vertex,
+        geometry,
+        fragment,
 
-    // Methods
+        program,
+    };
 
     Shader();
-
-    ~Shader();
-
-
-    void init(const std::filesystem::path& path, bool use_standart_dir = true);
-
-
-    explicit Shader(const std::filesystem::path& path, bool use_standart_dir = true)
-        : Shader() 
-    { 
-        init(path, use_standart_dir); 
+    Shader(std::string_view code, types type)
+    {
+        init(code, type);
+    }
+    Shader(std::filesystem::path path, bool use_std_dir = true)
+    {
+        init(path, use_std_dir);
     }
 
+    void init(std::string_view code, types type);
+    void init(std::filesystem::path path, bool use_std_dir = true);
+
+    ~Shader();
+};
+
+struct Program : public GL_Object
+{
+public:
+    // Methods
+
+    Program();
+
+    void init(Shader vert,              Shader frag);
+    void init(Shader vert, Shader geom, Shader frag);
+
+    Program(Shader vert,              Shader frag)
+    {   
+        init(vert, frag); 
+    }
+    Program(Shader vert, Shader geom, Shader frag)
+    {   
+        init(vert, geom, frag); 
+    }
+
+    ~Program();
 
     void bind() const;
     void unbind() const;
 
     //uniform setters
-    void setBool(std::string_view name, bool value) const;
-    void setInt(std::string_view name, int value) const;
-    void setFloat(std::string_view name, float value) const;
-    void setVec2(std::string_view name, const glm::vec2& value) const;
-    void setVec2(std::string_view name, float x, float y) const;
-    void setVec3(std::string_view name, const glm::vec3& value) const;
-    void setVec3(std::string_view name, float x, float y, float z) const;
-    void setVec4(std::string_view name, const glm::vec4& value) const;
-    void setVec4(std::string_view name, float x, float y, float z, float w) const;
-    void setMat2(std::string_view name, const glm::mat2& mat) const;
-    void setMat3(std::string_view name, const glm::mat3& mat) const;
-    void setMat4(std::string_view name, const glm::mat4& mat) const;
-private:
-    void check_errors(unsigned int id, std::string type) const;
+    void set_bool(std::string_view name, bool value) const;
+    void set_int(std::string_view name, int value) const;
+    void set_float(std::string_view name, float value) const;
+
+    void set_vec(std::string_view name, const glm::vec2& value) const;
+    void set_vec(std::string_view name, float x, float y) const;
+    void set_vec(std::string_view name, const glm::vec3& value) const;
+    void set_vec(std::string_view name, float x, float y, float z) const;
+    void set_vec(std::string_view name, const glm::vec4& value) const;
+    void set_vec(std::string_view name, float x, float y, float z, float w) const;
+
+    void set_mat(std::string_view name, const glm::mat2& mat) const;
+    void set_mat(std::string_view name, const glm::mat3& mat) const;
+    void set_mat(std::string_view name, const glm::mat4& mat) const;
 };
 
 } //namespace skgl

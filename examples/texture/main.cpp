@@ -15,13 +15,13 @@ int main()
 	window->set_cursor_mode(skgl::Window::cursor_modes::disabled);
 
 	skgl::Texture texture;
-	skgl::Shader basic_shader;
+	skgl::Program basic_program;
 	auto quad = skgl::Shapes::Quad();
 
 	try
 	{
 		texture.init("wall.jpg");
-		basic_shader.init("texture");
+		basic_program.init({ "texture.vert" }, { "texture.frag" });
 	}
 	catch (const std::exception& e)
 	{
@@ -39,9 +39,9 @@ int main()
 	skgl::Camera cam;
 	cam.m_pos = { 0.f, 0.f, -2.f };
 
-	basic_shader.bind();
+	basic_program.bind();
 	texture.bind();
-	basic_shader.setMat4("model", glm::mat4(1.f));
+	basic_program.set_mat("model", glm::mat4(1.f));
 
 
 	while (!window->should_close())
@@ -79,9 +79,9 @@ int main()
 		window->clear();
 
 		cam.m_aspect_ratio = window->aspect_ratio();
-		basic_shader.setMat4("proj", cam.get_proj());
+		basic_program.set_mat("proj", cam.get_proj());
 
-		basic_shader.setMat4("view", cam.look_at());
+		basic_program.set_mat("view", cam.look_at());
 
 
 		quad.draw();

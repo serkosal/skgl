@@ -26,7 +26,7 @@ struct Billboard : public Drawable
 	mutable float a = 0.f;
 
 
-	void draw(const Camera& camera, const Shader& shader) const override
+	void draw(const Camera& camera, const Program& program) const override
 	{
 		glm::vec3 d_pos = m_pos - camera.m_pos;
 
@@ -38,11 +38,11 @@ struct Billboard : public Drawable
 		model = glm::translate(model, m_pos);
 
 
-		shader.bind();
+		program.bind();
 
-		shader.setMat4("model", model);
-		shader.setMat4("view", camera.look_at());
-		shader.setMat4("proj", camera.get_proj());
+		program.set_mat("model", model);
+		program.set_mat("view", camera.look_at());
+		program.set_mat("proj", camera.get_proj());
 
 		m_texture.bind();
 

@@ -13,7 +13,7 @@ namespace skgl
 
 struct Drawable
 {
-	virtual void draw(const Camera& camera, const Shader& shader) const = 0;
+	virtual void draw(const Camera& camera, const Program& program) const = 0;
 };
 
 } // namespace skgl
